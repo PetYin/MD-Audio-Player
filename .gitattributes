@@ -1,0 +1,14 @@
+# Normalize ordinary source files consistently on every platform.
+* text=auto eol=lf
+
+# Keep reviewed source assets and rule data byte-for-byte identical.
+/resources/icon.ico -text
+/resources/icon.png -text
+/resources/icon.svg -text
+/engine/rules/classification.json -text
+/engine/rules/recipes.json -text
+/shared/facet-metadata.json -text
+/compliance/sources/*.tar.gz -text
+
+# Bootstrap copies this script verbatim to a hash-pinned vendor source file.
+/scripts/build-ffmpeg.sh -text

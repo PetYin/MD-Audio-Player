@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
+    <AssemblyName>AudioInventory</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AssetStudio"><HintPath>../vendor/assetstudio/AssetStudio.dll</HintPath></Reference>
+    <Reference Include="K4os.Compression.LZ4"><HintPath>../vendor/assetstudio/K4os.Compression.LZ4.dll</HintPath></Reference>
+    <Reference Include="ZstdSharp"><HintPath>../vendor/assetstudio/ZstdSharp.dll</HintPath></Reference>
+    <Reference Include="Newtonsoft.Json"><HintPath>../vendor/assetstudio/Newtonsoft.Json.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

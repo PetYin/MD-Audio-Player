@@ -1,0 +1,38 @@
+MD Audio Player FFmpeg 8.0 source modification
+Notice and patch prepared: 2026-10-16.
+The earlier build used the same two banner-match changes; only the dated notice is new.
+
+--- a/configure
++++ b/configure
+@@ -1,4 +1,6 @@
+ #!/bin/sh
++# Modified by MD Audio Player maintainers; notice added 2026-10-16.
++# Localized MSVC banner detection: match Microsoft without a line-start anchor.
+ #
+ # FFmpeg configure script
+ #
+@@ -5177,12 +5179,12 @@
+         _flags_filter=msvc_flags_link
+         _ld_lib='lib%.a'
+         _ld_path='-libpath:'
+-    elif VSLANG=1033 $_cc -nologo- 2>&1 | grep -q ^Microsoft || { $_cc -v 2>&1 | grep -q clang && $_cc -? > /dev/null 2>&1; }; then
++    elif VSLANG=1033 $_cc -nologo- 2>&1 | grep -q Microsoft || { $_cc -v 2>&1 | grep -q clang && $_cc -? > /dev/null 2>&1; }; then
+         _type=msvc
+-        if VSLANG=1033 $_cc -nologo- 2>&1 | grep -q ^Microsoft; then
++        if VSLANG=1033 $_cc -nologo- 2>&1 | grep -q Microsoft; then
+             # Depending on the tool (cl.exe or link.exe), the version number
+             # is printed on the first line of stderr or stdout
+-            _ident=$(VSLANG=1033 $_cc 2>&1 | grep ^Microsoft | head -n1 | tr -d '\r')
++            _ident=$(VSLANG=1033 $_cc 2>&1 | grep Microsoft | head -n1 | tr -d '\r')
+         else
+             _ident=$($_cc --version 2>/dev/null | head -n1 | tr -d '\r')
+         fi
+@@ -5292,7 +5294,7 @@
+     DEPCCFLAGS=$_flags
+ fi
+ 
+-if VSLANG=1033 $ar 2>&1 | grep -q ^Microsoft; then
++if VSLANG=1033 $ar 2>&1 | grep -q Microsoft; then
+     arflags="-nologo"
+     ar_o='-out:$@'
+ elif $ar 2>&1 | grep -q "\[D\] "; then

@@ -1,0 +1,36 @@
+
+  configuration:
+    --toolchain=msvc
+    --arch=x86_64
+    --target-os=win64
+    --disable-autodetect
+    --disable-network
+    --disable-doc
+    --disable-debug
+    --disable-x86asm
+    --disable-gpl
+    --disable-nonfree
+    --disable-version3
+    --disable-everything
+    --enable-ffmpeg
+    --enable-ffprobe
+    --enable-protocol='file,pipe'
+    --enable-demuxer='wav,ogg,mp3,pcm_s16le,pcm_s24le,pcm_s32le,pcm_f32le,pcm_f64le'
+    --enable-indev=lavfi
+    --enable-decoder='pcm_s16le,pcm_s24le,pcm_s32le,pcm_f32le,pcm_f64le,pcm_u8,vorbis,mp3'
+    --enable-encoder='pcm_s16le,pcm_s24le,pcm_s32le,pcm_f32le,pcm_f64le'
+    --enable-muxer='wav,null,pcm_s16le,pcm_s24le,pcm_s32le,pcm_f32le,pcm_f64le'
+    --enable-parser='vorbis,mpegaudio'
+    --enable-filter='abuffer,abuffersink,aresample,asetrate,aformat,anull,atrim,asetpts,afade,apad,adelay,amix,concat,volume,loudnorm,silencedetect,silenceremove,astats,sine,anullsrc'
+
+Exiting with exit code 0
+ffmpeg version 8.0 Copyright (c) 2000-2025 the FFmpeg developers
+  built with 用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.44.35225 版
+  configuration: --toolchain=msvc --arch=x86_64 --target-os=win64 --disable-autodetect --disable-network --disable-doc --disable-debug --disable-x86asm --disable-gpl --disable-nonfree --disable-version3 --disable-everything --enable-ffmpeg --enable-ffprobe --enable-protocol='file,pipe' --enable-demuxer='wav,ogg,mp3,pcm_s16le,pcm_s24le,pcm_s32le,pcm_f32le,pcm_f64le' --enable-indev=lavfi --enable-decoder='pcm_s16le,pcm_s24le,pcm_s32le,pcm_f32le,pcm_f64le,pcm_u8,vorbis,mp3' --enable-encoder='pcm_s16le,pcm_s24le,pcm_s32le,pcm_f32le,pcm_f64le' --enable-muxer='wav,null,pcm_s16le,pcm_s24le,pcm_s32le,pcm_f32le,pcm_f64le' --enable-parser='vorbis,mpegaudio' --enable-filter='abuffer,abuffersink,aresample,asetrate,aformat,anull,atrim,asetpts,afade,apad,adelay,amix,concat,volume,loudnorm,silencedetect,silenceremove,astats,sine,anullsrc'
+  libavutil      60.  8.100 / 60.  8.100
+  libavcodec     62. 11.100 / 62. 11.100
+  libavformat    62.  3.100 / 62.  3.100
+  libavdevice    62.  1.100 / 62.  1.100
+  libavfilter    11.  4.100 / 11.  4.100
+  libswscale      9.  1.100 /  9.  1.100
+  libswresample   6.  1.100 /  6.  1.100

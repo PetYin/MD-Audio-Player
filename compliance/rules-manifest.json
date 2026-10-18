@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-19",
+  "reviewScope": "Exact-byte metadata review; not a copyright clearance or authorization record.",
+  "gameContentAuthorization": "not_established_by_this_manifest",
+  "ruleBytesChangedByThisReview": true,
+  "displayMetadataCleanup": {
+    "reviewedAt": "2026-10-17",
+    "previousRecipesSha256": "a69af420259b8fcb838dbef0b352cfb482d3406bc2c271cec734e3327cb5a9f2",
+    "changedFields": [
+      "description",
+      "tags"
+    ],
+    "changedRecords": 586,
+    "changedDescriptions": 79,
+    "changedTagArrays": 544,
+    "removedInternalTags": 558,
+    "functionalFieldsUnchanged": true,
+    "classificationBytesUnchanged": true,
+    "nextScanMayRebuildActionCaches": 79,
+    "existingReleaseArchivesUpdated": false
+  },
+  "cardDataRemoval": {
+    "reviewedAt": "2026-10-18",
+    "previousClassificationSha256": "a84f6e12a23e009b4389a73f9b6819fdc79aa597ea430f40787593c42396e85b",
+    "previousRecipesSha256": "f243269aef84f1d1dfa90f20e585809658b01040669f83ea5a4362df71a24545",
+    "removedCardAliasRecipes": 507,
+    "classificationEntriesWithCardNamesRemoved": 60,
+    "removedNumericCardIdTags": 60,
+    "removedCardNumberTags": 15,
+    "remainingRecordsFunctionalFieldsUnchanged": true,
+    "existingReleaseArchivesUpdated": false
+  },
+  "artifacts": [
+    {
+      "path": "engine/rules/classification.json",
+      "sha256": "13f8daa2ff606931b29797e31e05a69b3a7d2570f5f584fcab4c6f3533c8475b",
+      "sizeBytes": 858430,
+      "entryCount": 2378,
+      "kindCounts": {
+        "music": 163,
+        "sfx": 2134,
+        "voice": 81
+      },
+      "rootType": "object_keyed_by_asset_name_and_payload_sha256",
+      "identitySeparator": ":",
+      "identityHashPattern": "^[a-f0-9]{64}$",
+      "entryFields": [
+        "title",
+        "kind",
+        "form",
+        "category",
+        "tags",
+        "description"
+      ],
+      "stringFields": [
+        "title",
+        "kind",
+        "form",
+        "description"
+      ],
+      "stringArrayFields": [
+        "category",
+        "tags"
+      ],
+      "sourceTypes": [
+        "local_game_asset_names_and_payload_hashes",
+        "maintainer_taxonomy_and_usage_annotations"
+      ],
+      "rightsStatus": "mixed_project_metadata_and_game_derived_identifiers_not_relicensed_as_a_whole"
+    },
+    {
+      "path": "engine/rules/recipes.json",
+      "sha256": "25ea98eda67e4d9a8731f298d7865e1b28c8008c5aefa324a7cf24753964e492",
+      "sizeBytes": 112093,
+      "version": 1,
+      "sampleRate": 48000,
+      "recipeCount": 84,
+      "completeActionCount": 71,
+      "actionBodyCount": 13,
+      "cardAliasCount": 0,
+      "aliasDistinctPayloadCount": 0,
+      "versionLockCount": 2,
+      "timelineLockCount": 9,
+      "rootFields": [
+        "version",
+        "sampleRate",
+        "locks",
+        "timelineLocks",
+        "recipes"
+      ],
+      "lockFields": [
+        "path",
+        "sha256"
+      ],
+      "versionLockPaths": [
+        "GameAssembly.dll",
+        "masterduel_Data/data.unity3d"
+      ],
+      "timelineLockPathPattern": "^LocalData/\\{account\\}/0000/[a-f0-9]{2}/[a-f0-9]{8}$",
+      "sha256Pattern": "^[a-f0-9]{64}$",
+      "recipeFields": [
+        "id",
+        "name",
+        "title",
+        "form",
+        "category",
+        "tags",
+        "description",
+        "alias",
+        "components",
+        "minimumSamples"
+      ],
+      "recipeStringFields": [
+        "id",
+        "name",
+        "title",
+        "form",
+        "description"
+      ],
+      "recipeStringArrayFields": [
+        "category",
+        "tags"
+      ],
+      "componentRequiredFields": [
+        "name",
+        "rawHash",
+        "start",
+        "gain",
+        "pitch"
+      ],
+      "componentOptionalFields": [
+        "end"
+      ],
+      "sourceTypes": [
+        "game_audio_asset_names_and_payload_hashes",
+        "game_derived_timing_parameters",
+        "maintainer_mix_parameters_and_explanatory_text"
+      ],
+      "rightsStatus": "game_derived_names_timing_and_arrangements_require_separate_distribution_basis"
+    },
+    {
+      "path": "shared/facet-metadata.json",
+      "sha256": "c6e9b659600785766da33ba53c1a1719027f61f1dc2887d9b7bdb2fe58b7236b",
+      "sizeBytes": 248079,
+      "schemaVersion": 1,
+      "resourceCount": 2378,
+      "actionCount": 84,
+      "profileCount": 125,
+      "profileFields": [
+        "types",
+        "purposes",
+        "summon",
+        "attribute",
+        "cardType",
+        "level",
+        "animation",
+        "confirmation",
+        "displayForm"
+      ],
+      "resourceIdentity": "original_name_and_payload_sha256",
+      "actionIdentity": "current_recipe_id_with_name_and_form_guard",
+      "sourceTypes": [
+        "verified_reference_filter_taxonomy",
+        "current_resource_and_recipe_identities"
+      ],
+      "rightsStatus": "game_derived_identifiers_and_metadata_not_relicensed_as_a_whole",
+      "rootFields": [
+        "schemaVersion",
+        "profiles",
+        "resources",
+        "actions",
+        "resourceDefaults"
+      ],
+      "resourceDefaultCount": 6,
+      "resourceDefaultFields": [
+        "title",
+        "category",
+        "tags",
+        "description"
+      ]
+    }
+  ],
+  "excludedContent": [
+    "game_audio_or_video_payloads",
+    "game_data_tables",
+    "game_program_code_or_derived_text",
+    "actual_account_directory_values",
+    "user_absolute_paths",
+    "login_credentials",
+    "encoded_copies_of_the_above"
+  ],
+  "reviewLimitations": [
+    "No complete deterministic exporter for these compact rule files was located in the inspected source.",
+    "Dataset provenance does not establish the originality or permission status of every individual text field.",
+    "Matching these hashes is an integrity boundary only; it does not authorize extraction, distribution, or reuse."
+  ],
+  "flipSummonNavigationCorrection": {
+    "reviewedAt": "2026-10-19",
+    "previousClassificationSha256": "fee201e044183158ff2124e9d60ccfd83373898a4a8455ccd2345019fb4f1799",
+    "previousFacetMetadataSha256": "2b75deb513d203738bef4c7c7e7333eedb29bfe3c1b75990d5325eebc655bf71",
+    "reason": "User-requested CARD_DRAW navigation exclusion and flip completion grouping.",
+    "drawNavigationPolicy": "SE_CARD_DRAW_01 through SE_CARD_DRAW_04 remain card operations / draw and never populate summon facets.",
+    "flipCompletionPolicy": "SE_DISP_ATTACK and SE_DISP_DEFENS are final face-up stance branches shared with ordinary position changes; both use the existing reverse-summon / flip grouping.",
+    "changedClassificationRecords": 6,
+    "changedDefaultFields": [
+      "title",
+      "category",
+      "tags",
+      "description"
+    ],
+    "facetRootFieldsAdded": [
+      "resourceDefaults"
+    ],
+    "resourceDefaultCount": 6,
+    "resourceDefaultIdentity": "exact_original_name_and_one_unambiguous_payload_sha256",
+    "personalOverridesPreserved": true,
+    "sqliteRowsRewritten": false,
+    "audioPayloadsChanged": false,
+    "recipeBytesChanged": false,
+    "existingReleaseArchivesUpdated": false
+  }
+}

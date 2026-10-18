@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "platform": "win-x64",
+  "buildTools": { "dotnetSdk": "10.0.202", "dotnetRuntime": "10.0.6", "python": "3.13.5", "visualStudio": "2022", "cmakeGenerator": "Visual Studio 17 2022" },
+  "archives": [
+    { "id": "assetstudio", "version": "0.19.0", "file": "assetstudio-v0.19.0.zip", "url": "https://github.com/aelurum/AssetStudioMod/releases/download/v0.19.0/AssetStudioModCLI_net9_portable.zip", "sha256": "4ee4befc2316885dcb4c2dc0a07c01967a6fba23fdfd1b44e0285799de6ac662", "license": "MIT", "runtimeAllowlist": ["AssetStudio.dll", "K4os.Compression.LZ4.dll", "ZstdSharp.dll", "Newtonsoft.Json.dll"] },
+    { "id": "vgmstream", "version": "r2117", "file": "vgmstream-r2117.zip", "url": "https://github.com/vgmstream/vgmstream/archive/refs/tags/r2117.zip", "sha256": "1b9245a61a6d123f56ad853d9e0098c62447fa9ada58a6c116b195ff6ccb1219", "license": "ISC; BSD-3-Clause (Vorbis/Ogg)", "enabledExternalCodecs": ["Vorbis"], "disabledCodecs": ["MPEG", "FFmpeg", "G7221", "G719", "ATRAC9", "CELT", "SPEEX"] },
+    { "id": "ffmpeg", "version": "8.0", "file": "ffmpeg-8.0.tar.xz", "url": "https://ffmpeg.org/releases/ffmpeg-8.0.tar.xz", "sha256": "b2751fccb6cc4c77708113cd78b561059b6fa904b24162fa0be2d60273d27b8e", "license": "LGPL-2.1-or-later", "sourceIncluded": true, "buildScript": "scripts/build-ffmpeg.sh", "externalLibraries": [], "network": false, "gpl": false, "nonfree": false },
+    { "id": "make", "version": "4.4.1-2", "file": "make-4.4.1-2.pkg.tar.zst", "url": "https://repo.msys2.org/msys/x86_64/make-4.4.1-2-x86_64.pkg.tar.zst", "sha256": "2408af61717dae87b00c855b132769a125c708907fc94a46bb16dae076113e5c", "license": "GPL-3.0-or-later", "buildOnly": true }
+  ],
+  "licenses": [
+    { "file": "AssetStudio-MIT.txt", "url": "https://raw.githubusercontent.com/aelurum/AssetStudioMod/v0.19.0/LICENSE", "sha256": "63f9e12e6edc0116374728fb7db751eb7daea4631856a6d211fdb55eaf1bdcf1" },
+    { "file": "K4os-LZ4-MIT.txt", "url": "https://raw.githubusercontent.com/MiloszKrajewski/K4os.Compression.LZ4/1.3.8/LICENSE", "sha256": "ef5a021fc2ae3658f4ad8d2526c87fb2cf394285f47abfb784cf73a27ffd9522" },
+    { "file": "Newtonsoft-MIT.txt", "url": "https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/13.0.3/LICENSE.md", "sha256": "d7f83bbea3264a8e23d7739e44d9db1a4994b357274df6f00876eb2e623827ad" },
+    { "file": "ZstdSharp-MIT.txt", "url": "https://raw.githubusercontent.com/oleg-st/ZstdSharp/0.8.6/LICENSE", "sha256": "9a6a7216e532c4ee4f78881d31fb641c27148eb01b2d0e8e3235ffe9a70a662c" },
+    { "file": "DotNet-MIT.txt", "url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.6/LICENSE.TXT", "sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310" },
+    { "file": "DotNet-THIRD-PARTY.txt", "url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.6/THIRD-PARTY-NOTICES.TXT", "sha256": "66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54" },
+    { "file": "OpenSSL-3-Apache-2.0.txt", "url": "https://raw.githubusercontent.com/openssl/openssl/openssl-3.0.16/LICENSE.txt", "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a" },
+    { "file": "Zlib-LICENSE.txt", "url": "https://raw.githubusercontent.com/madler/zlib/v1.3.1/LICENSE", "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243" },
+    { "file": "Zstandard-BSD.txt", "url": "https://raw.githubusercontent.com/facebook/zstd/v1.5.7/LICENSE", "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8" },
+    { "file": "XZ-COPYING.txt", "url": "https://raw.githubusercontent.com/tukaani-project/xz/v5.2.5/COPYING", "sha256": "bcb02973ef6e87ea73d331b3a80df7748407f17efdb784b61b47e0e610d3bb5c" },
+    { "file": "Libmpdec-BSD.txt", "url": "https://raw.githubusercontent.com/python/cpython-source-deps/mpdecimal-4.0.0/COPYRIGHT.txt", "sha256": "2713324211652ce4a60e6e21e54f9dc3004299e591b0933a352f1a89c5fb53c2" }
+  ]
+}

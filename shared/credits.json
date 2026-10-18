@@ -1,0 +1,93 @@
+{
+  "intro": "感谢以下第三方软件、运行库、字体及其作者与贡献者。它们共同支持 MD 音效播放器的资源导入、音频处理和桌面界面。",
+  "rights": {
+    "title": "KONAMI 与游戏内容权利人",
+    "paragraphs": [
+      "《游戏王：大师决斗》（Yu-Gi-Oh! MASTER DUEL）相关音乐、音效、语音、游戏程序、美术、文本和商标等权利归 Konami 及相关权利人所有，具体以官方权利声明及实际权利归属为准。",
+      "本项目为非官方工具，与 Konami 及相关权利人没有隶属关系，未获得其对本项目的授权、赞助或认可。游戏及公司名称仅用于说明兼容对象，不表示合作或背书。",
+      "本项目原创代码的 MIT 许可不涵盖游戏内容，以及 engine/rules/ 和 shared/facet-metadata.json 中的游戏衍生数据。导出的音频仅供个人、非商业使用，请勿再分发、上传或用于商业用途；导出功能及本声明不构成游戏内容的使用授权。"
+    ],
+    "attribution": [
+      "©2020 Studio Dice/SHUEISHA, TV TOKYO, KONAMI",
+      "©Konami Digital Entertainment"
+    ]
+  },
+  "sections": [
+    {
+      "id": "runtime",
+      "title": "桌面与引擎运行库",
+      "note": "运行库随便携版提供；各运行库内部组件的完整署名见所附许可和第三方声明。",
+      "entries": [
+        { "name": "Electron", "version": "44.7.0", "license": "MIT 及所附第三方许可", "purpose": "桌面应用运行时" },
+        { "name": "Chromium", "version": "152.0.7977.130", "license": "BSD 及所附第三方许可", "purpose": "Electron 内置的界面渲染与媒体能力" },
+        { "name": "Node.js / V8", "version": "随 Electron 提供", "license": "MIT / BSD 及所附第三方许可", "purpose": "桌面主进程与 JavaScript 执行引擎" },
+        { "name": "SQLite", "version": "随 Electron 提供", "license": "Public Domain", "purpose": "通过 Node.js 的 node:sqlite 管理本地音频索引" },
+        { "name": ".NET Runtime", "version": "10.0.6 · win-x64", "license": "MIT 及所附第三方声明", "purpose": "自包含资源导入器运行时" },
+        { "name": "CPython", "version": "3.13.5", "license": "PSF 许可及所附声明", "purpose": "随包音频处理引擎运行时" },
+        { "name": "OpenSSL / zlib / liblzma / libmpdec", "version": "3.0.16 / 1.3.1 / 5.2.5 / 4.0.0", "license": "Apache-2.0 / zlib / Public Domain / BSD", "purpose": "CPython 的散列、归档和数值支持" },
+        { "name": "bzip2 / libffi", "version": "1.0.8 / 随 CPython 提供", "license": "bzip2 许可 / MIT", "purpose": "CPython 的压缩和原生函数调用支持" },
+        { "name": "Microsoft C/C++ 运行库", "version": "随 CPython Windows 构建提供", "license": "Microsoft Distributable Code 条款", "purpose": "Windows 原生运行支持；声明见 Python-3.13.txt" },
+        { "name": "PyInstaller Bootloader", "version": "6.16.0", "license": "GPL-2.0-or-later，附 Bootloader Exception", "purpose": "启动打包后的 Python 引擎" }
+      ]
+    },
+    {
+      "id": "audio-import",
+      "title": "资源导入与音频处理",
+      "note": "独立 FFmpeg 命令行工具与 Electron 随附的 ffmpeg.dll 是不同构建，其对应源码和说明分别保留。",
+      "entries": [
+        { "name": "AssetStudioMod Core", "version": "0.19.0", "license": "MIT", "purpose": "读取 Unity 资源包并复制原始音频载荷" },
+        { "name": "K4os.Compression.LZ4", "version": "1.3.8", "license": "MIT", "purpose": "Unity 资源包解压" },
+        { "name": "ZstdSharp.Port", "version": "0.8.6", "license": "MIT；另保留上游 Zstandard BSD 声明", "purpose": "Unity 资源包解压" },
+        { "name": "Newtonsoft.Json", "version": "13.0.3", "license": "MIT", "purpose": "资源导入器的托管库依赖" },
+        { "name": "vgmstream", "version": "r2117", "license": "ISC 及上游 COPYING 中的组件声明", "purpose": "独立 FSB 音频解码" },
+        { "name": "libvorbis / libogg", "version": "1.3.7 / 1.3.5", "license": "BSD-3-Clause", "purpose": "vgmstream 使用的 Vorbis 解码依赖" },
+        { "name": "FFmpeg / ffprobe", "version": "8.0 · 项目定制音频构建", "license": "LGPL-2.1-or-later", "purpose": "音频转换、重采样、动作混音和分析" },
+        { "name": "Electron 内置 FFmpeg", "version": "提交 2b68d2babae73714846961fb0ee47e3b3d2e39a9", "license": "LGPL-2.1-or-later 及文件级声明", "purpose": "Electron / Chromium 的 ffmpeg.dll 媒体运行库" }
+      ]
+    },
+    {
+      "id": "interface",
+      "title": "界面、图标与字体",
+      "note": "界面依赖的版本来自 package-lock.json；字体版本为 Fontsource 可变字体包版本。",
+      "entries": [
+        { "name": "React / React DOM", "version": "19.3.0", "license": "MIT", "purpose": "播放器界面与交互" },
+        { "name": "Scheduler", "version": "0.28.0", "license": "MIT", "purpose": "React 调度支持" },
+        { "name": "Zod", "version": "4.6.5", "license": "MIT", "purpose": "桌面进程通信的输入校验" },
+        { "name": "Lucide React / Feather", "version": "1.54.0 / 所含图标", "license": "ISC，并保留 Feather MIT 声明", "purpose": "播放器界面图标" },
+        { "name": "Manrope · The Manrope Project Authors", "version": "Fontsource 5.3.0", "license": "SIL Open Font License 1.1", "purpose": "本地西文字体" },
+        { "name": "Noto Sans SC · Google", "version": "Fontsource 5.3.0", "license": "SIL Open Font License 1.1", "purpose": "本地简体中文字体" }
+      ]
+    },
+    {
+      "id": "build-test",
+      "title": "构建与测试工具",
+      "note": "以下工具用于开发、打包或测试；PyInstaller 的随包 Bootloader 已在运行库一节单列。未固定版本的工具以实际构建环境为准。",
+      "entries": [
+        { "name": "Vite / @vitejs/plugin-react", "version": "8.3.4 / 6.1.2", "license": "MIT", "purpose": "界面构建与 React 集成" },
+        { "name": "Tailwind CSS / @tailwindcss/vite", "version": "4.3.3", "license": "MIT", "purpose": "界面样式生成" },
+        { "name": "esbuild", "version": "0.28.2", "license": "MIT", "purpose": "桌面主进程与预加载脚本打包" },
+        { "name": "TypeScript", "version": "7.0.2", "license": "Apache-2.0", "purpose": "类型检查" },
+        { "name": "DefinitelyTyped：@types/node / @types/react / @types/react-dom", "version": "26.6.5 / 19.3.0 / 19.3.0", "license": "MIT", "purpose": "Node.js 与 React 的 TypeScript 类型定义" },
+        { "name": "@electron/packager", "version": "20.3.0", "license": "BSD-2-Clause", "purpose": "Windows 便携版打包" },
+        { "name": "Playwright", "version": "1.64.0", "license": "Apache-2.0", "purpose": "桌面界面与交互测试" },
+        { "name": "tsx", "version": "4.23.15", "license": "MIT", "purpose": "TypeScript 测试执行" },
+        { "name": "Node.js / npm", "version": "构建环境；项目要求 Node.js 24+", "license": "见各项目许可与第三方声明", "purpose": "JavaScript 构建脚本与依赖管理" },
+        { "name": ".NET SDK", "version": "10.0.202", "license": "见 .NET 许可与第三方声明", "purpose": "编译自包含资源导入器" },
+        { "name": "Python / PyInstaller / pip 及构建依赖", "version": "3.13.5 / 6.16.0；依赖见 requirements-build.txt", "license": "见各项目许可", "purpose": "Python 引擎构建；固定依赖包括 altgraph、packaging、pefile、pyinstaller-hooks-contrib、pywin32-ctypes 和 setuptools" },
+        { "name": "GNU Make", "version": "4.4.1-2 · MSYS2 包", "license": "GPL-3.0-or-later", "purpose": "FFmpeg 编译" },
+        { "name": "Visual Studio C++ Build Tools / CMake", "version": "Visual Studio 2022；CMake 随构建环境", "license": "Microsoft 工具许可 / BSD-3-Clause", "purpose": "原生音频工具编译" },
+        { "name": "Git for Windows / Bash / PowerShell", "version": "构建环境；项目要求 PowerShell 7", "license": "见各项目许可及所含组件声明", "purpose": "源码与构建脚本支持" },
+        { "name": "Pillow", "version": "构建环境，未固定版本", "license": "见 Pillow 随附许可", "purpose": "生成播放器 PNG 与 Windows ICO 图标" }
+      ]
+    }
+  ],
+  "documents": [
+    { "path": "THIRD_PARTY_NOTICES.md", "description": "完整第三方声明、游戏内容权利说明与构建边界" },
+    { "path": "LICENSE", "description": "本项目原创代码的 MIT 许可证" },
+    { "path": "resources/vendor/licenses/", "description": "便携版随附的第三方许可原文；源码工作目录对应 vendor/licenses/" },
+    { "path": "LICENSES.chromium.html", "description": "便携版中 Electron / Chromium 的完整第三方声明" },
+    { "path": "compliance/ELECTRON_FFMPEG_SOURCE.md", "description": "Electron 内置 FFmpeg 的对应源码与替换说明" },
+    { "path": "compliance/FFMPEG_CLI_CHANGES.md", "description": "独立 FFmpeg 命令行构建的修改记录" }
+  ],
+  "closing": "本 Creditlist 是便于阅读的致谢摘要。完整署名、适用许可、权利说明及源码资料以 THIRD_PARTY_NOTICES.md、各组件随附许可原文和 compliance/ 中的记录为准。感谢所有上游作者与贡献者。"
+}

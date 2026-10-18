@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-10-16",
+  "electron": {
+    "version": "44.7.0",
+    "tagObject": "794670e0659c5818dd56b6211be64e5f409ca91a",
+    "revision": "61f55c4ce540416b3e43f75f6c0f125d22e5e908",
+    "releaseUrl": "https://github.com/electron/electron/releases/tag/v44.7.0",
+    "publishedAt": "2026-10-07T19:13:08Z",
+    "officialWinX64ZipSha256": "eee30dc8fa1f5ea95490e59f44e46ea68dd24c6e93d22facf70fe5c2d4c2665c",
+    "files": [
+      {
+        "path": "electron.exe",
+        "sha256": "2529b494f4123f152bce346051f7bd855ef95006424a561953cf17c49a3d1ba8",
+        "bytes": 246302208,
+        "matchesOfficialZip": true
+      },
+      {
+        "path": "ffmpeg.dll",
+        "sha256": "d38957b4351486a16141bdd3162643b811564ba6bfa1d12f374c13b70207dc11",
+        "bytes": 3113472,
+        "matchesOfficialZip": true
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "5154e165bd6c2cc0cfbcd8916498c7abab0497923bafcd5cb07673fe8480087d",
+        "bytes": 1096,
+        "matchesOfficialZip": true
+      },
+      {
+        "path": "LICENSES.chromium.html",
+        "sha256": "e6e6b1f9cb0f32235412be113de7716333e88121f9159a0ea0ff3be652021af7",
+        "bytes": 20477229,
+        "matchesOfficialZip": true
+      },
+      {
+        "path": "version",
+        "sha256": "3e1e0322d949de3be7e5b9883a0c8014660aafa67e417a7d86b281e9733829a1",
+        "bytes": 6,
+        "matchesOfficialZip": true
+      },
+      {
+        "path": "resources/default_app.asar",
+        "sha256": "0eb2491b0a9ac94790389d39c09dd5005c6c1f0665842943829bbd0193f6cc4f",
+        "bytes": 110862,
+        "matchesOfficialZip": true,
+        "note": "Original upstream input; removed by the application packager."
+      }
+    ]
+  },
+  "chromium": {
+    "version": "152.0.7977.130",
+    "revision": "2c592105bbcd9490a9894df48d0fe59b2c512651",
+    "sourceUrl": "https://chromium.googlesource.com/chromium/src/+/2c592105bbcd9490a9894df48d0fe59b2c512651"
+  },
+  "ffmpeg": {
+    "revision": "2b68d2babae73714846961fb0ee47e3b3d2e39a9",
+    "sourceUrl": "https://chromium.googlesource.com/chromium/third_party/ffmpeg/+/2b68d2babae73714846961fb0ee47e3b3d2e39a9",
+    "configuration": "chromium/config/Chrome/win/x64",
+    "license": "LGPL-2.1-or-later; file-level notices in CREDITS.chromium",
+    "gpl": false,
+    "nonfree": false,
+    "version3": false,
+    "libopus": true,
+    "electronPatch": "electron-ffmpeg.patch",
+    "electronPatchEffect": "macOS install_name only; retained as official patch even for Windows",
+    "releaseGnArguments": {
+      "build/args/all.gn": "is_electron_build = true\nroot_extra_deps = [ \"//electron\" ]\n\n# Registry of NMVs --> https://github.com/nodejs/node/blob/main/doc/abi_version_registry.json\nnode_module_version = 149\n\n# Build Node.js against Chromium's BoringSSL instead of node's bundled OpenSSL.\nnode_openssl_path = \"//third_party/boringssl\"\n\nv8_promise_internal_field_count = 1\nv8_embedder_string = \"-electron.0\"\n\n# Salt the hash V8 uses to key code caches and serialized wasm modules with a\n# fingerprint of the patches we apply on top of the V8 release. Release\n# branches cherry-pick V8 fixes without changing V8's own version number, so\n# without this a build with a different patch set would still accept (and\n# mis-link) serialized code written by the previous release. V8 hashes these\n# files at `gn gen` time and re-runs gn whenever one of them changes.\n_v8_patch_dir = \"//electron/patches/v8\"\nv8_version_hash_salt_files = [ \"$_v8_patch_dir/.patches\" ]\nforeach(_patch, read_file(\"$_v8_patch_dir/.patches\", \"list lines\")) {\n  if (_patch != \"\") {\n    v8_version_hash_salt_files += [ \"$_v8_patch_dir/$_patch\" ]\n  }\n}\n\n# TODO: this breaks mksnapshot\nv8_enable_snapshot_native_code_counters = false\n\n# we use this api\nv8_enable_javascript_promise_hooks = true\n\nenable_cdm_host_verification = false\nffmpeg_branding = \"Chrome\"\nproprietary_codecs = true\n\nenable_printing = true\n\n# Refs https://chromium-review.googlesource.com/c/chromium/src/+/6986517\n# CI is using MacOS 15.5 which doesn't have the required modulemaps.\nuse_clang_modules = false\n\n# Removes DLLs from the build, which are only meant to be used for Chromium\n# development.\n# See https://github.com/electron/electron/pull/17985\nangle_enable_vulkan_validation_layers = false\ndawn_enable_vulkan_validation_layers = false\n\n# These are disabled because they cause the zip manifest to differ between\n# testing and release builds.\n# See https://chromium-review.googlesource.com/c/chromium/src/+/2774898.\nenable_pseudolocales = false\n\n# Make application name configurable at runtime for cookie crypto\nallow_runtime_configurable_key_storage = true\n\n# CET shadow stack is incompatible with v8, until v8 is CET compliant\n# enabling this flag causes main process crashes where CET is enabled\n# Ref: https://source.chromium.org/chromium/chromium/src/+/45fba672185aae233e75d6ddc81ea1e0b30db050:v8/BUILD.gn;l=357\nenable_cet_shadow_stack = false\n\n# For similar reasons, disable CFI, which is not well supported in V8.\n# Chromium doesn't have any problems with this because they do not run\n# V8 in the browser process.\n# Ref: https://source.chromium.org/chromium/chromium/src/+/45fba672185aae233e75d6ddc81ea1e0b30db050:v8/BUILD.gn;l=281\nis_cfi = false\n\n# TODO: fix this once sysroots have been updated.\nuse_qt5 = false\nuse_qt6 = false\n\n# https://chromium.googlesource.com/chromium/src/+/main/docs/dangling_ptr.md\n# TODO(vertedinde): hunt down dangling pointers on Linux\nenable_dangling_raw_ptr_checks = false\nenable_dangling_raw_ptr_feature_flag = false\n\n# This flag speeds up the performance of fork/execve on linux systems.\n# Ref: https://chromium-review.googlesource.com/c/v8/v8/+/4602858\nv8_enable_private_mapping_fork_optimization = true\n\n# Expose public V8 symbols for native modules.\nv8_expose_public_symbols = true\n\n# We don't use anything from here, and it causes target collisions\nenable_linux_installer = false\n\n# Disable \"Save to Drive\" feature in PDF viewer\nenable_pdf_save_to_drive = false\n\n# Blink's crowdsourced V8 compile hints producer randomly selects 0.5% of\n# renderer processes (Windows only) to compile every http(s) script from\n# source -- deliberately not consuming an existing code cache, and neither\n# consuming nor producing local compile hints -- so that it can record which\n# functions were compiled to UKM. The consumer half lives in chrome/browser\n# and needs OptimizationGuide, and there is no UKM backend here, so this only\n# ever costs a cold-cache page load. Build the stub producer (as Android\n# does) instead.\nproduce_v8_compile_hints = false\n\n# Track which grit resource IDs the linked binary actually references and\n# repack the locale .pak files with only those strings. Enabled for both\n# testing and release builds so that a reference to an unshipped resource\n# fails PR CI (see //electron:electron_resource_allowlist_check) rather than\n# the next release build.\n# TODO: extend the allowlist consumption to Windows (PDB-based extraction) and\n# macOS (needs Mach-O support in\n# tools/resources/generate_resource_allowlist.py); on those platforms this\n# only makes grit emit the (free) marker symbols today.\nenable_resource_allowlist_generation = true\n",
+      "build/args/release.gn": "import(\"//electron/build/args/all.gn\")\nis_component_build = false\nis_official_build = true\n\n# By default, Electron builds ffmpeg with proprietary codecs enabled. In order\n# to facilitate users who don't want to ship proprietary codecs in ffmpeg, or\n# who have an LGPL requirement to ship ffmpeg as a dynamically linked library,\n# we build ffmpeg as a shared library.\nis_component_ffmpeg = true\n\n# Electron-generated PGO profiles. The C++ profiles are resolved by Chromium's\n# standard chrome_pgo_phase = 2 machinery (patched to read Electron's state\n# files - see\n# patches/chromium/build_resolve_pgo_profiles_from_electron_state_files.patch),\n# so this file only needs to point V8's builtins profiling at the Electron\n# profile. Both are downloaded by gclient hooks; see\n# build/pgo_profiles/README.md.\nv8_builtins_profiling_log_file =\n    \"//electron/build/pgo_profiles/electron-v8-builtins.profile\"\n",
+      "build/args/ffmpeg.gn": "import(\"//electron/build/args/all.gn\")\nis_component_build = false\nis_component_ffmpeg = true\nis_official_build = true\nffmpeg_branding = \"Chromium\"\nenable_dsyms = false\nproprietary_codecs = false\n"
+    }
+  },
+  "archives": [
+    {
+      "path": "sources/electron-v44.7.0-source.tar.gz",
+      "sha256": "98ed707611d37be363a29ded8ebc7a9dde21ca8e15448f08f212e874142e1124",
+      "bytes": 20530785,
+      "upstreamUrl": "https://codeload.github.com/electron/electron/tar.gz/refs/tags/v44.7.0",
+      "revision": "61f55c4ce540416b3e43f75f6c0f125d22e5e908",
+      "regularFiles": 3336,
+      "uncompressedFileBytes": 37949672,
+      "links": [],
+      "modified": false
+    },
+    {
+      "path": "sources/chromium-ffmpeg-2b68d2babae73714846961fb0ee47e3b3d2e39a9.tar.gz",
+      "sha256": "65dc601abb4805ee8dbeee9bec93e765b92198527a8e510f8d59131676572078",
+      "bytes": 18818328,
+      "upstreamUrl": "https://chromium.googlesource.com/chromium/third_party/ffmpeg/+archive/2b68d2babae73714846961fb0ee47e3b3d2e39a9.tar.gz",
+      "revision": "2b68d2babae73714846961fb0ee47e3b3d2e39a9",
+      "regularFiles": 11015,
+      "uncompressedFileBytes": 97120801,
+      "links": [],
+      "modified": false
+    },
+    {
+      "path": "sources/chromium-ffmpeg-build-inputs-2c592105bbcd9490a9894df48d0fe59b2c512651.tar.gz",
+      "sha256": "0a80d9f627d08c39ee923ba840200fa3747f46184982340ec176d80c57633474",
+      "bytes": 8785363,
+      "revision": "2c592105bbcd9490a9894df48d0fe59b2c512651",
+      "modified": "Source bytes unchanged; selected subtrees repacked with SOURCE-MANIFEST.json",
+      "regularFiles": 3714,
+      "uncompressedFileBytes": 42949693,
+      "links": {}
+    }
+  ],
+  "toolchainProfile": {
+    "officialUrl": "https://github.com/electron/electron/releases/download/v44.7.0/electron-v44.7.0-win32-x64-toolchain-profile.zip",
+    "sha256": "90386280bc7e4ac5d451e43e26a7c76ed1c8bcdc0206ec50762c7e4f09c59c28",
+    "sdks": [
+      {
+        "name": "vs",
+        "hash": "f01f89c8cfdc8d2f44eaaa70c5610f38e09aeac3"
+      },
+      {
+        "name": "wsdk",
+        "hash": "388b42ccc908f0300ec84b3535e0c7cb18411cbd"
+      }
+    ],
+    "note": "Selected fields from the checksum-verified official profile; toolchain itself is not redistributed."
+  },
+  "ffmpegCli": {
+    "version": "8.0",
+    "upstreamUrl": "https://ffmpeg.org/releases/ffmpeg-8.0.tar.xz",
+    "sourceSha256": "b2751fccb6cc4c77708113cd78b561059b6fa904b24162fa0be2d60273d27b8e",
+    "originalConfigureSha256": "8946342ef754811e13a08fac1c972bffdbb078d7dfef5d5468eaeb0fb6ce049c",
+    "buildConfigureSha256": "42f9dd43626b5a45049df3940dfaf63156f475b7b82f9c8ac9dc6173489a9ee1",
+    "localConfigureMatchesTwoDocumentedEdits": true,
+    "datedNoticePatch": "ffmpeg-8.0-localized-msvc.patch",
+    "files": [
+      {
+        "path": "ffmpeg.exe",
+        "sha256": "1731abeb466026b4d7585a6e75633358140d7e05f3edb002ac0b56b5b8bbe972"
+      },
+      {
+        "path": "ffprobe.exe",
+        "sha256": "a58cfc49559da9d2fdefcc3f86e4bfc805f29478d14165dc54a394ef0cb1f3c2"
+      }
+    ],
+    "datedConfigureSha256": "bd5f930d0e14a626a9b62074d92332e88bca98ed0baa10a73eb32c9666cda181",
+    "modificationScope": "Two replacement patterns change four configure lines; the 2026-10-16 patch adds a two-line dated notice without changing the existing build logic."
+  },
+  "limits": [
+    "No full Chromium/Electron rebuild or byte-reproducibility claim.",
+    "The exact FFmpeg library source, platform headers and Electron patch are included; Chromium build support is a selected supplement, not an offline complete Chromium checkout.",
+    "Full GN dependency resolution, toolchains, Node and other DEPS dependencies require the pinned official checkout and network retrieval described in ELECTRON_FFMPEG_SOURCE.md.",
+    "This is source/provenance documentation, not a legal compliance guarantee."
+  ]
+}

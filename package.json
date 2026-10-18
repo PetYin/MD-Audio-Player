@@ -1,0 +1,42 @@
+{
+  "name": "md-audio-player",
+  "version": "1.5.1",
+  "private": true,
+  "type": "module",
+  "description": "Offline Master Duel audio library and player",
+  "license": "MIT",
+  "main": "dist/desktop/main.cjs",
+  "scripts": {
+    "build": "tsc --noEmit && node scripts/build.mjs",
+    "start": "electron .",
+    "dev": "npm run build && electron .",
+    "test": "tsx --test tests/*.test.ts",
+    "test:release": "python -m unittest discover -s tests -p test_release_audit.py && pwsh -NoProfile -File scripts/test-bootstrap.ps1",
+    "test:desktop": "node scripts/test-desktop.mjs",
+    "test:facets": "node scripts/test-facets.mjs",
+    "package": "npm run build && node scripts/package.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/manrope": "5.3.0",
+    "@fontsource-variable/noto-sans-sc": "5.3.0",
+    "lucide-react": "1.54.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@electron/packager": "20.3.0",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "electron": "44.7.0",
+    "esbuild": "0.28.2",
+    "playwright": "1.64.0",
+    "tailwindcss": "4.3.3",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2",
+    "vite": "8.3.4"
+  }
+}
