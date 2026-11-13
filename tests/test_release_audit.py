@@ -66,6 +66,26 @@ class ReleaseAuditTests(unittest.TestCase):
         with self.assertRaisesRegex(audit.AuditError, "CARD_DRAW summon exclusion"):
             audit.audit_facet_metadata(table, classifications, recipes)
 
+    def test_facet_defaults_accept_exact_added_resources_but_keep_reviewed_corrections(self):
+        table, classifications, recipes = self.facet_fixture()
+        added = "SE_RACE_TEST:" + "d" * 64
+        classifications[added] = {"title": "竞速", "category": ["界面与其他演出", "竞速玩法"], "tags": ["竞速玩法"], "description": "Synthetic added resource"}
+        table["resources"][added] = 0
+        table["resourceDefaults"][added] = copy.deepcopy(classifications[added])
+        audit.audit_facet_metadata(table, classifications, recipes)
+        reverse = next(key for key in classifications if key.startswith("SE_DISP_ATTACK:"))
+        for label, change in [
+            ("reviewed default identities", lambda table: table["resourceDefaults"].pop(reverse)),
+            ("defaults differ", lambda table: table["resourceDefaults"][added].update({"tags": ["Unreviewed tag"]})),
+            # The reviewed flip-summon correction keeps its own facet check next to the added default.
+            ("flip-summon display resource", lambda table: table["profiles"][1].update({"summon": []})),
+        ]:
+            with self.subTest(label=label):
+                changed = copy.deepcopy(table)
+                change(changed)
+                with self.assertRaisesRegex(audit.AuditError, label):
+                    audit.audit_facet_metadata(changed, classifications, recipes)
+
     def test_facet_defaults_reject_unreviewed_fields_identities_and_classification_drift(self):
         base, classifications, recipes = self.facet_fixture()
         draw = next(iter(classifications))

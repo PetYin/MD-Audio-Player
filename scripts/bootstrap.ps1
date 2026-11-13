@@ -41,7 +41,7 @@ if (-not $EngineOnly) {
     }
 }
 if (-not $SkipEngine) {
-    foreach ($relative in @('vendor/engine','.cache/engine-dist','.cache/engine-build')) { Reset-BuildDirectory $relative }
+    foreach ($relative in @('vendor/engine','.cache/engine-dist','.cache/engine-build','.cache/src/ucrt')) { Reset-BuildDirectory $relative }
 }
 foreach ($dir in @('.cache/downloads','.cache/src','vendor/assetstudio','vendor/importer','vendor/vgmstream','vendor/ffmpeg','vendor/engine','vendor/licenses','vendor/sources')) {
     $null = Assert-WorkspacePath (Join-Path $playerRoot $dir)
@@ -75,7 +75,9 @@ if (-not $EngineOnly) {
     foreach ($name in $asset.runtimeAllowlist) {
         Copy-Item -LiteralPath (Join-Path '.cache/src/assetstudio/AssetStudioModCLI_net9_portable' $name) -Destination vendor/assetstudio -Force
     }
-    & dotnet publish importer/AudioInventory.csproj -c Release -r win-x64 --self-contained true -o vendor/importer -p:RuntimeFrameworkVersion=10.0.6 -p:PublishSingleFile=false -p:DebugType=None -p:DebugSymbols=false
+    # Without the last property the .NET SDK writes the current Git commit into the
+    # importer's version resource, so the same source would give different binaries.
+    & dotnet publish importer/AudioInventory.csproj -c Release -r win-x64 --self-contained true -o vendor/importer -p:RuntimeFrameworkVersion=10.0.6 -p:PublishSingleFile=false -p:DebugType=None -p:DebugSymbols=false -p:IncludeSourceRevisionInInformationalVersion=false
     Assert-Exit 'Publish self-contained importer'
     $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
     $vsRoot = & $vswhere -products '*' -version '[17.0,18.0)' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath -latest
@@ -117,10 +119,49 @@ if (-not $SkipEngine) {
     if ($pythonVersion -ne $lock.buildTools.python) { throw "Build requires Python $($lock.buildTools.python), found $pythonVersion. This keeps the packaged runtime and third-party notices in sync." }
     & $python -m pip install --disable-pip-version-check --require-hashes -r scripts/requirements-build.txt
     Assert-Exit 'Install pinned Python build dependencies'
+    # PyInstaller copies the first Universal CRT it finds on PATH, so SDK or tool
+    # folders on the build machine could change the shipped DLLs. Use the pinned
+    # Windows SDK redistributable instead, first on PATH for this one command.
+    $ucrt = $lock.engineBuild.ucrt
+    $ucrtPackage = Join-Path '.cache/downloads' $ucrt.file
+    Get-Verified $ucrt.url $ucrtPackage $ucrt.sha256
+    $ucrtRoot = Assert-WorkspacePath (Join-Path $playerRoot '.cache/src/ucrt')
+    # A .conda package is a ZIP file; Expand-Archive only accepts the .zip extension.
+    $ucrtZip = Join-Path $ucrtRoot 'package.zip'
+    Copy-Item -LiteralPath $ucrtPackage -Destination $ucrtZip -Force
+    Expand-Archive -LiteralPath $ucrtZip -DestinationPath $ucrtRoot -Force
+    $ucrtPayload = @(Get-ChildItem -LiteralPath $ucrtRoot -Filter 'pkg-*.tar.zst' -File)
+    if ($ucrtPayload.Count -ne 1) { throw 'Unexpected layout in the pinned UCRT package.' }
+    # Windows tar.exe receives its arguments in the ANSI code page, so an absolute
+    # path with Chinese folder names reaches it as '?'. Pass workspace-relative paths.
+    & tar -xf ".cache/src/ucrt/$($ucrtPayload[0].Name)" -C .cache/src/ucrt
+    Assert-Exit 'Extract pinned UCRT'
+    $ucrtBin = [IO.Path]::GetFullPath((Join-Path $ucrtRoot 'Library/bin'))
+    if (-not (Test-Path -LiteralPath (Join-Path $ucrtBin 'ucrtbase.dll'))) { throw 'The pinned UCRT package has no ucrtbase.dll.' }
     $rules = (Resolve-Path engine/rules).Path + ';rules'
-    & $python -m PyInstaller --noconfirm --clean --onedir --name md-engine --distpath .cache/engine-dist --workpath .cache/engine-build --specpath .cache --add-data $rules engine/main.py
-    Assert-Exit 'Package Python engine'
+    $savedPath, $savedEpoch, $savedSeed = $env:PATH, $env:SOURCE_DATE_EPOCH, $env:PYTHONHASHSEED
+    try {
+        $env:PATH = $ucrtBin + [IO.Path]::PathSeparator + $env:PATH
+        # A fixed PE timestamp and hash seed keep md-engine.exe and base_library.zip byte-identical across rebuilds.
+        $env:SOURCE_DATE_EPOCH = [string]$lock.engineBuild.sourceDateEpoch
+        $env:PYTHONHASHSEED = [string]$lock.engineBuild.pythonHashSeed
+        & $python -m PyInstaller --noconfirm --clean --onedir --name md-engine --distpath .cache/engine-dist --workpath .cache/engine-build --specpath .cache --add-data $rules engine/main.py
+        Assert-Exit 'Package Python engine'
+    } finally {
+        $env:PATH = $savedPath
+        $env:SOURCE_DATE_EPOCH = $savedEpoch
+        $env:PYTHONHASHSEED = $savedSeed
+    }
+    $collectedUcrt = @(Get-ChildItem -LiteralPath .cache/engine-dist/md-engine -Recurse -File | Where-Object { $_.Name -like 'api-ms-win-*.dll' -or $_.Name -eq 'ucrtbase.dll' })
+    if ($collectedUcrt.Name -notcontains 'ucrtbase.dll') { throw 'PyInstaller did not collect the pinned UCRT.' }
+    foreach ($file in $collectedUcrt) {
+        $pinned = Join-Path $ucrtBin $file.Name
+        if (-not (Test-Path -LiteralPath $pinned) -or (Get-FileHash -LiteralPath $pinned).Hash -ne (Get-FileHash -LiteralPath $file.FullName).Hash) {
+            throw "The packaged engine has a UCRT file that is not the pinned copy: $($file.Name)"
+        }
+    }
     Copy-Item .cache/engine-dist/md-engine/* vendor/engine -Recurse -Force
+    Copy-Item -LiteralPath (Join-Path $ucrtRoot 'info/licenses/LICENSE.txt') -Destination vendor/licenses/UCRT-WindowsSDK.txt -Force
     Copy-Item .cache/build-python/Lib/site-packages/pyinstaller-6.16.0.dist-info/licenses/COPYING.txt vendor/licenses/PyInstaller-COPYING.txt -Force
     $pythonBase = & $python -c 'import sys; print(sys.base_prefix)'
     Copy-Item (Join-Path $pythonBase 'LICENSE.txt') vendor/licenses/Python-3.13.txt -Force

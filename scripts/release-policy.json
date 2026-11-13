@@ -76,6 +76,7 @@
     "scripts/test-facets.mjs",
     "scripts/test-library.mjs",
     "scripts/test-packaged.mjs",
+    "scripts/test-play-modes.mjs",
     "scripts/test-scan-modes.mjs",
     "scripts/zip-release.py",
     "shared/contracts.ts",
@@ -93,6 +94,7 @@
     "src/Waveform.tsx",
     "src/facets.ts",
     "src/main.tsx",
+    "src/playback.ts",
     "src/styles.css",
     "src/tags.ts",
     "src/themes.ts",
@@ -104,6 +106,7 @@
     "tests/installations.test.ts",
     "tests/jobs.test.ts",
     "tests/library.test.ts",
+    "tests/playback.test.ts",
     "tests/test_release_audit.py",
     "tsconfig.json",
     "vite.config.ts"
@@ -132,12 +135,12 @@
     "resources/icon.ico": "b2de1d9575ee19b3e3e095b8137df6fd2389d514995ff4381359c0cf6554a9fb",
     "resources/icon.png": "149697c3d81939c5382b38d09bd74dc94734204b3618d9f7f9ce232ace4be693",
     "resources/icon.svg": "9cfd3e2f81f7752b693b4ee9a53ca9eb947b0b38034d66cf40bcf14fd8d67c6c",
-    "engine/rules/classification.json": "13f8daa2ff606931b29797e31e05a69b3a7d2570f5f584fcab4c6f3533c8475b",
-    "engine/rules/recipes.json": "25ea98eda67e4d9a8731f298d7865e1b28c8008c5aefa324a7cf24753964e492",
+    "engine/rules/classification.json": "f05429d6099bd5f88e0f151fc0a207f39a50143fd3ac52b0e7ba492de25fc306",
+    "engine/rules/recipes.json": "c178712eeddfe9e79c89a5ffa4f50391ee262662cf542362ad873119666aa967",
     "compliance/sources/electron-v44.7.0-source.tar.gz": "98ed707611d37be363a29ded8ebc7a9dde21ca8e15448f08f212e874142e1124",
     "compliance/sources/chromium-ffmpeg-2b68d2babae73714846961fb0ee47e3b3d2e39a9.tar.gz": "65dc601abb4805ee8dbeee9bec93e765b92198527a8e510f8d59131676572078",
     "compliance/sources/chromium-ffmpeg-build-inputs-2c592105bbcd9490a9894df48d0fe59b2c512651.tar.gz": "0a80d9f627d08c39ee923ba840200fa3747f46184982340ec176d80c57633474",
-    "shared/facet-metadata.json": "c6e9b659600785766da33ba53c1a1719027f61f1dc2887d9b7bdb2fe58b7236b"
+    "shared/facet-metadata.json": "faced987bbc9bc3f3271855d857f12c01a63a49aeeaeb20d53db7127ece5d9ad"
   },
   "vendorFiles": {
     "assetstudio/AssetStudio.dll": "d98c765721230eb3bfe6af12b281742ac3c5cefb454d62a35897bb8c2056bd0e",
@@ -196,18 +199,18 @@
     "engine/_internal/api-ms-win-crt-string-l1-1-0.dll": "fcf12466cc12fd3b73611fc0763a5a1f9d44e90349513c34a0c83b0f36421793",
     "engine/_internal/api-ms-win-crt-time-l1-1-0.dll": "886e57c4a6adb299b38f02945369f590a67da4e79a798359fc60aaa067212d7c",
     "engine/_internal/api-ms-win-crt-utility-l1-1-0.dll": "5f8f26b216ade615b67a41f6fbbb910972fc6153315a65bb8f09912be50215b1",
-    "engine/_internal/base_library.zip": "7b3847dad9afd9f2356d10969c2604ca1ba11a866dc4910d7a1da9c3b15a9e25",
+    "engine/_internal/base_library.zip": "86013e3b777f736c46366a9ec46a2a8755d6b1cad183f200546ce56edb29485e",
     "engine/_internal/libcrypto-3.dll": "ccfffddcd3defb8d899026298af9af43bc186130f8483d77e97c93233d5f27d7",
     "engine/_internal/libffi-8.dll": "eff52743773eb550fcc6ce3efc37c85724502233b6b002a35496d828bd7b280a",
     "engine/_internal/python313.dll": "0565965617d94274d7f2c2958d0bef33392cd9d2f346f99d8e1bedbdf264ee85",
-    "engine/_internal/rules/classification.json": "13f8daa2ff606931b29797e31e05a69b3a7d2570f5f584fcab4c6f3533c8475b",
-    "engine/_internal/rules/recipes.json": "25ea98eda67e4d9a8731f298d7865e1b28c8008c5aefa324a7cf24753964e492",
+    "engine/_internal/rules/classification.json": "f05429d6099bd5f88e0f151fc0a207f39a50143fd3ac52b0e7ba492de25fc306",
+    "engine/_internal/rules/recipes.json": "c178712eeddfe9e79c89a5ffa4f50391ee262662cf542362ad873119666aa967",
     "engine/_internal/select.pyd": "d1e486de9653640be7c3a9bed04aa716b29ea76a69e1de758dd9fa708f2c9d38",
     "engine/_internal/ucrtbase.dll": "3239227d27667ba20d10a880751924e5719de0078f9fce232d149d383f7681f6",
     "engine/_internal/unicodedata.pyd": "e7d0375a7064b1c8916cca7cabf7e3df559fc8463dfdf831f403e95c79499121",
     "engine/md-engine.exe": "00ff832f9ceb4c121d66618545f1b3968f0f5c3750f77fc87b3f78d04ec37547",
-    "ffmpeg/ffmpeg.exe": "1731abeb466026b4d7585a6e75633358140d7e05f3edb002ac0b56b5b8bbe972",
-    "ffmpeg/ffprobe.exe": "a58cfc49559da9d2fdefcc3f86e4bfc805f29478d14165dc54a394ef0cb1f3c2",
+    "ffmpeg/ffmpeg.exe": "8a911f0944ce06da1e7440fd86cca4e6feb0ae3a1c96a108753593a21c7f6250",
+    "ffmpeg/ffprobe.exe": "5831e33ca22f0231f211245262aeb024425e7367e4edce2143417b50d0015a76",
     "importer/AssetStudio.dll": "d98c765721230eb3bfe6af12b281742ac3c5cefb454d62a35897bb8c2056bd0e",
     "importer/AudioInventory.deps.json": "7d718a369086e8c2c1eaafc9e7a33a54e3df24b229e41e40e80f02b4c4367f76",
     "importer/AudioInventory.dll": "de3b210c4b7afee5b1eb474c6bfb1795c1cf88b32713da55e63a2e80abb24d1c",
@@ -420,6 +423,7 @@
     "licenses/React-MIT.txt": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
     "licenses/ReactDOM-MIT.txt": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
     "licenses/Scheduler-MIT.txt": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+    "licenses/UCRT-WindowsSDK.txt": "f4589c739597890dd40bccb6bf20632a99c228bdd20cfbf585b5b30c9e61b3fb",
     "licenses/Vorbis-BSD.txt": "ec1815db59fcd302846df949d7424876cb2e2dc5ed1606c5fb0b36787b1cf43a",
     "licenses/XZ-COPYING.txt": "bcb02973ef6e87ea73d331b3a80df7748407f17efdb784b61b47e0e610d3bb5c",
     "licenses/Zlib-LICENSE.txt": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
@@ -430,7 +434,7 @@
     "sources/build-ffmpeg.sh": "b816ceaad39b97a23d71544d2572f6227193c30f873def276bed3de5bb83eb3b",
     "sources/ffmpeg-8.0.tar.xz": "b2751fccb6cc4c77708113cd78b561059b6fa904b24162fa0be2d60273d27b8e",
     "vgmstream/libvorbis.dll": "5f330a20b19b3c70dc43eedcc95891e65940fca04a77155c573efcdd4c2ca665",
-    "vgmstream/vgmstream-cli.exe": "9b4520d58658ab4d5623f33a075b221a8012cf17d5b1fd233df7faa4fffa85c3"
+    "vgmstream/vgmstream-cli.exe": "0f282688fc992b2f016d42b2099e8617d05deabe378a4d1d686d8ae234352c3b"
   },
   "electronVersion": "44.7.0",
   "electronFiles": {
@@ -614,7 +618,7 @@
     "renderer/assets/noto-sans-sc-vietnamese-wght-normal-y5SU35Rl.woff2": "cba3d00c8db989f0f0c3c7c48b1672468d9cb3c8c06514fc5cf1bb82ddccae7e"
   },
   "approvedArchives": {
-    "7b3847dad9afd9f2356d10969c2604ca1ba11a866dc4910d7a1da9c3b15a9e25": {
+    "86013e3b777f736c46366a9ec46a2a8755d6b1cad183f200546ce56edb29485e": {
       "kind": "python-bytecode",
       "description": "CPython 3.13.5 standard-library bytecode, 154 entries"
     },

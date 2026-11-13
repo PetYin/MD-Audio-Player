@@ -38,6 +38,8 @@ MIT 许可只适用于本项目有权许可的原创代码，不授予游戏素�
 | Electron 随附的 `ffmpeg.dll` | Electron 44.7.0 / Chromium 152.0.7977.130 / FFmpeg 提交 `2b68d2babae73714846961fb0ee47e3b3d2e39a9` | LGPL-2.1-or-later 及所附文件级声明 | Electron/Chromium 媒体运行时；独立于上述 FFmpeg 8.0 命令行构建 |
 | CPython | 3.13.5 | PSF 许可及所附声明 | 随包引擎运行时 |
 | OpenSSL / zlib / liblzma / libmpdec | 3.0.16 / 1.3.1 / 5.2.5 / 4.0.0 | Apache-2.0 / zlib / public domain / BSD | CPython 的散列、归档及数值支持 |
+| Microsoft Visual C++ 运行库（`VCRUNTIME140.dll`、`VCRUNTIME140_1.dll`） | 随 CPython 3.13.5 Windows 构建提供 | Microsoft Distributable Code 条款，见 `Python-3.13.txt` 的附加条件 | 随包引擎运行库 |
+| Microsoft Universal C Runtime（`ucrtbase.dll`、`api-ms-win-*.dll`） | 10.0.26100.4654，Windows SDK 10.0.26100 再分发文件 | Windows SDK 许可条款中的 Distributable Code；随附文本见 `UCRT-WindowsSDK.txt`，版本说明见下文 | PyInstaller 随引擎收集的运行库；来源和 SHA256 固定于 `dependencies.lock.json` |
 | PyInstaller bootloader | 6.16.0 | GPL-2.0-or-later，附 Bootloader Exception | 打包引擎；组合分发适用该例外，修改或单独分发仍须核对其条款 |
 | Electron | 44.7.0 | MIT 及 Chromium 第三方许可 | 桌面运行时 |
 | React / React DOM / Scheduler | 见 `package-lock.json` | MIT | 界面 |
@@ -70,6 +72,10 @@ MIT 许可只适用于本项目有权许可的原创代码，不授予游戏素�
 ## 组件选择与打包边界
 
 `scripts/bootstrap.ps1` 从固定的 AssetStudioMod 发行归档中选择 `AssetStudio.dll`、`K4os.Compression.LZ4.dll`、`ZstdSharp.dll` 和 `Newtonsoft.Json.dll`，不选择 AssetStudioUtility、AssetStudio.PInvoke、纹理/FBX 工具或 FMOD。vgmstream 配置启用 Vorbis，禁用 MPEG、FFmpeg、G.722.1、G.719、ATRAC9、CELT 和 SPEEX 集成；脚本复制其命令行程序及上游 x64 Vorbis DLL。这是该构建流程的选择范围，不是对已有目录全部文件的检查结果。
+
+PyInstaller 会收集 PATH 上最先找到的 UCRT。为了不让构建机器上的 SDK 或工具目录决定随包文件，`scripts/bootstrap.ps1` 打包引擎时从 `dependencies.lock.json` 固定的 conda-forge `ucrt` 包取得 Windows SDK 10.0.26100 的 x64 UCRT 再分发文件，只在 PyInstaller 这一步把它放到 PATH 最前，打包后逐个核对收集到的 UCRT 文件与该包一致，并把包内的 Windows SDK 许可文本复制为 `UCRT-WindowsSDK.txt`。同一步还固定 PE 时间戳（`SOURCE_DATE_EPOCH`）和 Python 字符串哈希种子，让引擎重建结果可以重复。
+
+`UCRT-WindowsSDK.txt` 是 conda-forge `ucrt` 包随附的 Windows 10 SDK 许可条款（2018 年 8 月版，`EULAID:WIN10SDK.RTM.AUG_2018_en-US`），不是 SDK 10.0.26100 安装介质自带的许可文件，本项目也未另行比对后者。本项目依据该文本第 2.a 条 Distributable Code（REDIST.TXT 所列文件）的条件再分发这些 UCRT 文件。
 
 GNU Make、CMake、Visual Studio、pip 及 PyInstaller 的构建期依赖用于开发。GNU Make 下载包位于 `.cache/`，不在当前发行脚本选择的发布目录中。
 

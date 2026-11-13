@@ -111,7 +111,10 @@ addRecord({ id: 'fixture_unknown', title: '未知资源：错误载荷', origina
 addRecord({ id: 'fixture_music', title: '音乐测试', originalName: 'BGM_FIXTURE', kind: 'music', category: ['音乐测试'], tags: ['个人高光', '音乐专用'] });
 addRecord({ id: 'fixture_voice', title: '语音测试', originalName: 'VOICE_FIXTURE', kind: 'voice', category: ['语音测试'], tags: ['语音专用'] });
 const correctedFixtures = fixtures.filter(entry => entry.record.id.startsWith('fixture_corrected_'));
-assert.deepEqual(correctedFixtures.map(entry => entry.record.originalName).sort(), ['SE_CARD_DRAW_01', 'SE_CARD_DRAW_02', 'SE_CARD_DRAW_03', 'SE_CARD_DRAW_04', 'SE_DISP_ATTACK', 'SE_DISP_DEFENS']);
+const reviewedCorrections = ['SE_CARD_DRAW_01', 'SE_CARD_DRAW_02', 'SE_CARD_DRAW_03', 'SE_CARD_DRAW_04', 'SE_DISP_ATTACK', 'SE_DISP_DEFENS'];
+assert.deepEqual(correctedFixtures.map(entry => entry.record.originalName).filter(name => reviewedCorrections.includes(name)).sort(), reviewedCorrections);
+// The other defaults restate the classification of sounds added by a later game update.
+assert.equal(correctedFixtures.length, Object.keys(metadata.resourceDefaults).length);
 const personalOverrides = new Map([
   [fixtures[0].record.id, { favorite: true }],
   ['fixture_corrected_SE_CARD_DRAW_02', { title: '我的抽卡名字', category: ['个人分类', '抽卡收藏'], tags: ['我的收藏'], favorite: true }],
@@ -208,7 +211,7 @@ try {
   const unknown = snapshot.records.find(record => record.id === 'fixture_unknown');
   assert(unknown.facets.confirmation.includes('待确认'));
   assert.deepEqual(unknown.facets.attribute, []); assert.deepEqual(unknown.facets.cardType, []);
-  checks.push('Legacy schema receives exact resource/action facets and six reviewed display corrections without import; all identities/media stay fixed and personal title/category/tags/favorite overrides retain priority');
+  checks.push('Legacy schema receives exact resource/action facets, the six reviewed display corrections and the game-update additions without import; all identities/media stay fixed and personal title/category/tags/favorite overrides retain priority');
 
   const search = page.getByRole('searchbox', { name: '搜索声音', exact: true });
   const forms = page.getByRole('combobox', { name: '音效形式', exact: true });

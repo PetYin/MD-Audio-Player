@@ -130,6 +130,19 @@
     "files": [
       {
         "path": "ffmpeg.exe",
+        "sha256": "8a911f0944ce06da1e7440fd86cca4e6feb0ae3a1c96a108753593a21c7f6250"
+      },
+      {
+        "path": "ffprobe.exe",
+        "sha256": "5831e33ca22f0231f211245262aeb024425e7367e4edce2143417b50d0015a76"
+      }
+    ],
+    "filesBuiltOn": "2026-11-04",
+    "filesCheckedOn": "2026-11-06",
+    "filesNote": "Rebuilt by scripts/bootstrap.ps1 from the same source archive, buildConfigureSha256 configure and options as the previous files; only PE header and debug-directory timestamps differ.",
+    "previousFiles": [
+      {
+        "path": "ffmpeg.exe",
         "sha256": "1731abeb466026b4d7585a6e75633358140d7e05f3edb002ac0b56b5b8bbe972"
       },
       {
@@ -137,6 +150,7 @@
         "sha256": "a58cfc49559da9d2fdefcc3f86e4bfc805f29478d14165dc54a394ef0cb1f3c2"
       }
     ],
+    "previousFilesBuiltOn": "2026-10-10",
     "datedConfigureSha256": "bd5f930d0e14a626a9b62074d92332e88bca98ed0baa10a73eb32c9666cda181",
     "modificationScope": "Two replacement patterns change four configure lines; the 2026-10-16 patch adds a two-line dated notice without changing the existing build logic."
   },

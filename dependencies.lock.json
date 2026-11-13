@@ -2,6 +2,11 @@
   "schemaVersion": 1,
   "platform": "win-x64",
   "buildTools": { "dotnetSdk": "10.0.202", "dotnetRuntime": "10.0.6", "python": "3.13.5", "visualStudio": "2022", "cmakeGenerator": "Visual Studio 17 2022" },
+  "engineBuild": {
+    "sourceDateEpoch": 1791984771,
+    "pythonHashSeed": 0,
+    "ucrt": { "version": "10.0.26100.0", "dllVersion": "10.0.26100.4654", "file": "ucrt-10.0.26100.0-h57928b3_0.conda", "url": "https://conda.anaconda.org/conda-forge/win-64/ucrt-10.0.26100.0-h57928b3_0.conda", "sha256": "3005729dce6f3d3f5ec91dfc49fc75a0095f9cd23bab49efb899657297ac91a5", "license": "LicenseRef-MicrosoftWindowsSDK10", "origin": "Unmodified x64 Universal CRT redistributable DLLs from the Windows SDK 10.0.26100 ISO, packaged by conda-forge/ucrt-feedstock 46ee6062622aa89360649331a6ab800265e3ab08" }
+  },
   "archives": [
     { "id": "assetstudio", "version": "0.19.0", "file": "assetstudio-v0.19.0.zip", "url": "https://github.com/aelurum/AssetStudioMod/releases/download/v0.19.0/AssetStudioModCLI_net9_portable.zip", "sha256": "4ee4befc2316885dcb4c2dc0a07c01967a6fba23fdfd1b44e0285799de6ac662", "license": "MIT", "runtimeAllowlist": ["AssetStudio.dll", "K4os.Compression.LZ4.dll", "ZstdSharp.dll", "Newtonsoft.Json.dll"] },
     { "id": "vgmstream", "version": "r2117", "file": "vgmstream-r2117.zip", "url": "https://github.com/vgmstream/vgmstream/archive/refs/tags/r2117.zip", "sha256": "1b9245a61a6d123f56ad853d9e0098c62447fa9ada58a6c116b195ff6ccb1219", "license": "ISC; BSD-3-Clause (Vorbis/Ogg)", "enabledExternalCodecs": ["Vorbis"], "disabledCodecs": ["MPEG", "FFmpeg", "G7221", "G719", "ATRAC9", "CELT", "SPEEX"] },

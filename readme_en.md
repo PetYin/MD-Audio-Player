@@ -16,7 +16,7 @@ Organize the Yu-Gi-Oh! MASTER DUEL sound effects, music and voices already downl
 - **Import:** Select a local game installation and scan the latest account resource directory or all account resource directories. Cancel an import and resume by scanning again.
 - **Organize:** Search names, original resource names, internal identifiers and tags. Edit categories and tags in bulk and mark favorites. Reimporting preserves personal edits.
 - **Filter:** Select sound types, audio forms and grouped tags. Selections within a group use OR; selections across groups use AND. Clicking a sidebar category clears the search and filters.
-- **Listen:** View sample-based waveforms, seek through audio, repeat a track, loop an A/B section and use Space to play or pause.
+- **Listen:** View sample-based waveforms, seek through audio, repeat a track or a whole list, shuffle a list, loop an A/B section and use Space to play or pause.
 - **Complete actions:** Combine multiple sounds according to their timing when the resource version and all required sounds match. Unavailable actions display the reason.
 - **Export:** Copy the library's decoded WAV without another conversion, or export a 48 kHz / 24-bit stereo WAV. Batch exports use category folders and avoid overwriting existing files.
 - **Back up annotations:** Export personal annotations to JSON or restore them from JSON. These backups contain no audio.
@@ -66,7 +66,7 @@ npm start
 
 Alternatively, download and extract the release archive ending in `-source.zip`. Open the directory containing `package.json` and follow the commands above starting with `npm ci`. Once the player starts, follow the game-folder selection and import steps in “Download and use.”
 
-`dependencies.lock.json` pins native dependency sources, versions and SHA256 hashes. `package-lock.json` pins npm dependencies and their integrity values. `bootstrap.ps1` prepares third-party tools and license material in the project's `vendor/` directory. These downloaded dependencies and runtime data are not committed to Git.
+`dependencies.lock.json` pins native dependency sources, versions and SHA256 hashes. It also pins the UCRT redistributable, PE timestamp and Python hash seed used to package the engine, so a rebuild can reproduce the reviewed engine files. `package-lock.json` pins npm dependencies and their integrity values. `bootstrap.ps1` prepares third-party tools and license material in the project's `vendor/` directory. These downloaded dependencies and runtime data are not committed to Git.
 
 Normal builds use the checked-in classification and facet JSON files.
 

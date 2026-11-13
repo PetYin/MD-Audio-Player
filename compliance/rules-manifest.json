@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewedAt": "2026-10-19",
+  "reviewedAt": "2026-11-06",
   "reviewScope": "Exact-byte metadata review; not a copyright clearance or authorization record.",
   "gameContentAuthorization": "not_established_by_this_manifest",
   "ruleBytesChangedByThisReview": true,
@@ -34,12 +34,12 @@
   "artifacts": [
     {
       "path": "engine/rules/classification.json",
-      "sha256": "13f8daa2ff606931b29797e31e05a69b3a7d2570f5f584fcab4c6f3533c8475b",
-      "sizeBytes": 858430,
-      "entryCount": 2378,
+      "sha256": "f05429d6099bd5f88e0f151fc0a207f39a50143fd3ac52b0e7ba492de25fc306",
+      "sizeBytes": 885021,
+      "entryCount": 2451,
       "kindCounts": {
-        "music": 163,
-        "sfx": 2134,
+        "music": 167,
+        "sfx": 2203,
         "voice": 81
       },
       "rootType": "object_keyed_by_asset_name_and_payload_sha256",
@@ -71,7 +71,7 @@
     },
     {
       "path": "engine/rules/recipes.json",
-      "sha256": "25ea98eda67e4d9a8731f298d7865e1b28c8008c5aefa324a7cf24753964e492",
+      "sha256": "c178712eeddfe9e79c89a5ffa4f50391ee262662cf542362ad873119666aa967",
       "sizeBytes": 112093,
       "version": 1,
       "sampleRate": 48000,
@@ -141,12 +141,12 @@
     },
     {
       "path": "shared/facet-metadata.json",
-      "sha256": "c6e9b659600785766da33ba53c1a1719027f61f1dc2887d9b7bdb2fe58b7236b",
-      "sizeBytes": 248079,
+      "sha256": "faced987bbc9bc3f3271855d857f12c01a63a49aeeaeb20d53db7127ece5d9ad",
+      "sizeBytes": 279238,
       "schemaVersion": 1,
-      "resourceCount": 2378,
+      "resourceCount": 2451,
       "actionCount": 84,
-      "profileCount": 125,
+      "profileCount": 127,
       "profileFields": [
         "types",
         "purposes",
@@ -172,7 +172,7 @@
         "actions",
         "resourceDefaults"
       ],
-      "resourceDefaultCount": 6,
+      "resourceDefaultCount": 79,
       "resourceDefaultFields": [
         "title",
         "category",
@@ -214,6 +214,37 @@
     ],
     "resourceDefaultCount": 6,
     "resourceDefaultIdentity": "exact_original_name_and_one_unambiguous_payload_sha256",
+    "personalOverridesPreserved": true,
+    "sqliteRowsRewritten": false,
+    "audioPayloadsChanged": false,
+    "recipeBytesChanged": false,
+    "existingReleaseArchivesUpdated": false
+  },
+  "versionLockRefresh": {
+    "reviewedAt": "2026-11-04",
+    "previousRecipesSha256": "25ea98eda67e4d9a8731f298d7865e1b28c8008c5aefa324a7cf24753964e492",
+    "reason": "The 2026-10-31 game update replaced every locked file, so all recipes were reported as unavailable.",
+    "changedFields": [
+      "locks",
+      "timelineLocks"
+    ],
+    "changedLockCount": 11,
+    "recipeEntriesUnchanged": true,
+    "existingReleaseArchivesUpdated": false
+  },
+  "gameUpdateResourceAdditions": {
+    "reviewedAt": "2026-11-06",
+    "previousClassificationSha256": "13f8daa2ff606931b29797e31e05a69b3a7d2570f5f584fcab4c6f3533c8475b",
+    "previousFacetMetadataSha256": "c6e9b659600785766da33ba53c1a1719027f61f1dc2887d9b7bdb2fe58b7236b",
+    "reason": "Sounds that first appeared with the 2026-10-31 game update had no classification entry, so the player filed them by name only.",
+    "addedClassificationRecords": 73,
+    "addedResourceIdentities": 73,
+    "addedProfiles": 2,
+    "addedResourceDefaults": 73,
+    "resourceDefaultPolicy": "Defaults for the added sounds restate their classification entries exactly, so libraries scanned before this update display what a fresh scan stores.",
+    "existingClassificationRecordsUnchanged": true,
+    "entriesForSoundsNoLongerInTheGameRetained": 16,
+    "filterVocabularyUnchanged": true,
     "personalOverridesPreserved": true,
     "sqliteRowsRewritten": false,
     "audioPayloadsChanged": false,

@@ -29,7 +29,8 @@
 | CPython | 3.13.5 | PSF 许可及所附声明 | 随包音频处理引擎运行时 |
 | OpenSSL / zlib / liblzma / libmpdec | 3.0.16 / 1.3.1 / 5.2.5 / 4.0.0 | Apache-2.0 / zlib / Public Domain / BSD | CPython 的散列、归档和数值支持 |
 | bzip2 / libffi | 1.0.8 / 随 CPython 提供 | bzip2 许可 / MIT | CPython 的压缩和原生函数调用支持 |
-| Microsoft C/C++ 运行库 | 随 CPython Windows 构建提供 | Microsoft Distributable Code 条款 | Windows 原生运行支持；声明见 Python-3.13.txt |
+| Microsoft Visual C++ 运行库 | 随 CPython Windows 构建提供 | Microsoft Distributable Code 条款 | Windows 原生运行支持；声明见 Python-3.13.txt |
+| Microsoft Universal C Runtime | 10.0.26100.4654 · Windows SDK 10.0.26100 | Windows SDK 许可条款中的 Distributable Code | 随引擎收集的 C 运行库；许可文本取自 conda-forge ucrt 包，为 Windows 10 SDK 许可条款（2018 年 8 月版），见 UCRT-WindowsSDK.txt |
 | PyInstaller Bootloader | 6.16.0 | GPL-2.0-or-later，附 Bootloader Exception | 启动打包后的 Python 引擎 |
 
 ## 资源导入与音频处理

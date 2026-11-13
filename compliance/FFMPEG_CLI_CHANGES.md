@@ -1,6 +1,6 @@
 # FFmpeg 8.0 命令行构建的源码修改记录
 
-记录日期：2026-10-16。本文件只针对独立的 `ffmpeg.exe` 和 `ffprobe.exe`，Electron 的 `ffmpeg.dll` 见 [另一份记录](ELECTRON_FFMPEG_SOURCE.md)。
+记录日期：2026-10-16；2026-11-06 更新发布基准二进制。本文件只针对独立的 `ffmpeg.exe` 和 `ffprobe.exe`，Electron 的 `ffmpeg.dll` 见 [另一份记录](ELECTRON_FFMPEG_SOURCE.md)。
 
 ## 已附源码和实际二进制
 
@@ -10,16 +10,16 @@
 
 | 文件 | 当前发布基准 SHA256 |
 | --- | --- |
-| `ffmpeg.exe` | `1731abeb466026b4d7585a6e75633358140d7e05f3edb002ac0b56b5b8bbe972` |
-| `ffprobe.exe` | `a58cfc49559da9d2fdefcc3f86e4bfc805f29478d14165dc54a394ef0cb1f3c2` |
+| `ffmpeg.exe` | `8a911f0944ce06da1e7440fd86cca4e6feb0ae3a1c96a108753593a21c7f6250` |
+| `ffprobe.exe` | `5831e33ca22f0231f211245262aeb024425e7367e4edce2143417b50d0015a76` |
 
-已直接运行该 `ffmpeg.exe -buildconf`，输出保留在 [ffmpeg-cli-buildconf.txt](ffmpeg-cli-buildconf.txt)。其报告的编译器为 Microsoft C/C++ 19.44.35225 x64；构建选项与项目脚本一致。这是文件比对和二进制自报配置证据，不是逐字节可复现构建证明。
+表中是 2026-11-04 由 `bootstrap.ps1` 重新构建的二进制，自 1.5.2 起作为发布基准。这次构建使用的 `configure` 哈希仍为上面的 `42f9dd43…`。直接运行该 `ffmpeg.exe -buildconf`，输出与 [ffmpeg-cli-buildconf.txt](ffmpeg-cli-buildconf.txt) 逐行相同，报告的编译器为 Microsoft C/C++ 19.44.35225 x64，构建选项与项目脚本一致。与 2026-10-10 构建的上一版基准（`ffmpeg.exe` 为 `1731abeb466026b4d7585a6e75633358140d7e05f3edb002ac0b56b5b8bbe972`，`ffprobe.exe` 为 `a58cfc49559da9d2fdefcc3f86e4bfc805f29478d14165dc54a394ef0cb1f3c2`）相比，文件大小相同，只有 PE 头和调试目录中的时间戳不同。每次重新编译这些时间戳都会改变，所以这是文件比对和二进制自报配置证据，不是逐字节可复现构建证明。
 
 ## 修改内容与日期
 
 [ffmpeg-8.0-localized-msvc.patch](ffmpeg-8.0-localized-msvc.patch)相对原始 8.0 `configure` 提供完整差异：将两类 `grep` 表达式中的 `^Microsoft` 改为 `Microsoft`，共影响四行，以识别本机中文 MSVC 输出中不位于行首的厂商名。现有二进制已经使用这四行功能修改。
 
-所附补丁还会在修改后文件头部加入两行显著说明，标注项目修改和说明日期 2026-10-16。这两行是本次补充到补丁材料的注释；现存构建目录和二进制并未因此重建，也不把该日期虚构为早先功能修改或二进制编译的日期。原有四行修改和本次注释均在同一补丁中清楚呈现。修改的是构建检测脚本，未改动 FFmpeg 音频处理源文件。已在原始 `configure` 的独立副本验证补丁正向应用及反向检查；去掉新增的两行说明后，与实际构建版本逐字节相同。
+所附补丁还会在修改后文件头部加入两行显著说明，标注项目修改和说明日期 2026-10-16。这两行是 2026-10-16 补充到补丁材料的注释，不参与构建：当时的构建目录和二进制并未因此重建，2026-11-04 重新构建时使用的也是只含四行功能修改的 `configure`；也不把该日期虚构为早先功能修改或二进制编译的日期。原有四行修改和 2026-10-16 加入的两行注释均在同一补丁中清楚呈现。修改的是构建检测脚本，未改动 FFmpeg 音频处理源文件。已在原始 `configure` 的独立副本验证补丁正向应用及反向检查；去掉新增的两行说明后，与实际构建版本逐字节相同。
 
 ## 构建与替换
 

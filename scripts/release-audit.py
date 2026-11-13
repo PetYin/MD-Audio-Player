@@ -301,7 +301,10 @@ def audit_facet_metadata(table: dict, classifications: dict, recipes: dict):
         require(action["name"] == recipe["name"] and action["form"] == recipe["form"] and valid_index(action["profile"]), "action identity guard")
     correction_keys = {key for key in classifications if "CARD_DRAW" in key.split(":")[0].upper() or key.split(":")[0] in {"SE_DISP_ATTACK", "SE_DISP_DEFENS"}}
     fields = {"title", "category", "tags", "description"}
-    require(isinstance(defaults, dict) and set(defaults) == correction_keys, "reviewed default identities")
+    # The reviewed corrections must stay. Any further default may only restate an
+    # exact current classification entry (for example a resource added after an
+    # older library was scanned), so old libraries display what a fresh scan stores.
+    require(isinstance(defaults, dict) and correction_keys <= set(defaults) <= set(classifications), "reviewed default identities")
     for key, value in defaults.items():
         require(isinstance(value, dict) and set(value) == fields, "default fields")
         require(isinstance(value["title"], str) and isinstance(value["description"], str) and strings(value["category"]) and strings(value["tags"]), "default values")
@@ -309,7 +312,7 @@ def audit_facet_metadata(table: dict, classifications: dict, recipes: dict):
         facets = profiles[resources[key]]
         if "CARD_DRAW" in key.split(":")[0].upper():
             require(not facets["summon"] and "召唤方式" not in facets["types"] and "召唤方式" not in facets["purposes"], "CARD_DRAW summon exclusion")
-        else:
+        elif key in correction_keys:
             require(facets["summon"] == ["反转召唤／翻转"] and {"召唤方式", "卡片相关"} <= set(facets["types"]), "flip-summon display resource")
 
 

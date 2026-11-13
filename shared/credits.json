@@ -26,7 +26,8 @@
         { "name": "CPython", "version": "3.13.5", "license": "PSF 许可及所附声明", "purpose": "随包音频处理引擎运行时" },
         { "name": "OpenSSL / zlib / liblzma / libmpdec", "version": "3.0.16 / 1.3.1 / 5.2.5 / 4.0.0", "license": "Apache-2.0 / zlib / Public Domain / BSD", "purpose": "CPython 的散列、归档和数值支持" },
         { "name": "bzip2 / libffi", "version": "1.0.8 / 随 CPython 提供", "license": "bzip2 许可 / MIT", "purpose": "CPython 的压缩和原生函数调用支持" },
-        { "name": "Microsoft C/C++ 运行库", "version": "随 CPython Windows 构建提供", "license": "Microsoft Distributable Code 条款", "purpose": "Windows 原生运行支持；声明见 Python-3.13.txt" },
+        { "name": "Microsoft Visual C++ 运行库", "version": "随 CPython Windows 构建提供", "license": "Microsoft Distributable Code 条款", "purpose": "Windows 原生运行支持；声明见 Python-3.13.txt" },
+        { "name": "Microsoft Universal C Runtime", "version": "10.0.26100.4654 · Windows SDK 10.0.26100", "license": "Windows SDK 许可条款中的 Distributable Code", "purpose": "随引擎收集的 C 运行库；许可文本取自 conda-forge ucrt 包，为 Windows 10 SDK 许可条款（2018 年 8 月版），见 UCRT-WindowsSDK.txt" },
         { "name": "PyInstaller Bootloader", "version": "6.16.0", "license": "GPL-2.0-or-later，附 Bootloader Exception", "purpose": "启动打包后的 Python 引擎" }
       ]
     },

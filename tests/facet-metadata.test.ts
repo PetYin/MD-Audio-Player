@@ -126,7 +126,7 @@ function legacyDraw(key = drawEntries[0][0]): EngineRecord {
 
 test('all CARD_DRAW resources use card-operation facets and corrected defaults without summon labels', () => {
   assert.equal(drawEntries.length, 4);
-  assert.deepEqual(Object.keys(metadata.resourceDefaults).sort(), [...drawEntries, ...displayEntries].map(([key]) => key).sort());
+  for (const [key] of [...drawEntries, ...displayEntries]) assert(Object.hasOwn(metadata.resourceDefaults, key), key);
   for (const [key, expected] of drawEntries) {
     const original = legacyDraw(key);
     const corrected = correctedRecordDefaults(original);
@@ -182,6 +182,51 @@ test('CARD_DRAW defaults require exact provenance and unknown versions cannot re
     assert.equal(facets.types.includes('召唤方式'), false);
     assert.equal(Object.hasOwn(facets.purposes, '召唤方式'), false);
   }
+});
+
+// Sounds that first appeared with the 2026-10-31 game update. Libraries scanned
+// before the rules listed them stored the name-based fallback classification.
+const addedNames = /^(?:SE_RACE_|SE_FIELD_MAT05[34]_|SE_M12441_|SE_SOLO_COMICAL_(?:CUTE_0[1-3]|LEAVES)$|BGM_DUEL_F1[23]_|SE_EV_EF(?:03416|15022|22692|22752|22766)$|BGM_PLANET_RUN$|SE_MONSTER_CUTIN_MANGASTYLE$)/;
+
+test('resources added by the game update show their reviewed classification in libraries scanned earlier', () => {
+  const corrections = new Set([...drawEntries, ...displayEntries].map(([key]) => key));
+  const added = Object.keys(metadata.resourceDefaults).filter(key => !corrections.has(key)).sort();
+  assert.equal(added.length, 73);
+  assert.deepEqual(added, Object.keys(classifications).filter(key => addedNames.test(key.split(':')[0])).sort());
+  for (const key of added) {
+    const entry = classifications[key as keyof typeof classifications];
+    assert.deepEqual(metadata.resourceDefaults[key as keyof typeof metadata.resourceDefaults],
+      { title: entry.title, category: entry.category, tags: entry.tags, description: entry.description });
+    assert(Object.hasOwn(metadata.resources, key), key);
+  }
+  // Under 界面与其他演出 every entry lists the root tag before its subcategory tag; the added sounds follow suit.
+  for (const [key, entry] of Object.entries(classifications)) {
+    if (entry.category[0] !== '界面与其他演出' || entry.category.length < 2) continue;
+    const [root, sub] = [entry.tags.indexOf(entry.category[0]), entry.tags.indexOf(entry.category[1])];
+    assert(root >= 0 && sub > root, `${key.split(':')[0]}: ${entry.tags.join(', ')}`);
+  }
+  for (const [name, title, category, types, purposes] of [
+    ['SE_RACE_COMPLETE_1ST', '竞速玩法 · SE_RACE_COMPLETE_1ST', ['界面与其他演出', '竞速玩法'], ['其他演出'], { 其他演出: ['其他演出'] }],
+    ['SE_EV_EF15022', '卡片专属演出 · SE_EV_EF15022', ['决斗音效', '卡片专属效果', '卡片发动与处理', '卡名待确认'], ['特效切入'], { 特效切入: ['效果处理'] }],
+    ['SE_MONSTER_CUTIN_MANGASTYLE', '漫画风格切入 · SE_MONSTER_CUTIN_MANGASTYLE', ['决斗音效', '卡片切入', '漫画风格切入'], ['特效切入', '召唤方式'], { 特效切入: ['卡片登场'], 召唤方式: ['召唤切入'] }],
+  ] as const) {
+    const payloadHash = added.find(key => key.split(':')[0] === name)!.split(':')[1];
+    const legacy = resource({ id: `legacy_${name}`, originalName: name, title: name, category: ['待确认', '用途待确认'], tags: ['待确认', '用途待确认'],
+      description: '根据资源名称推断分类，可自由修改。', sources: [{ ...resource().sources[0], payloadHash }] });
+    const corrected = correctedRecordDefaults(legacy);
+    assert.equal(corrected.title, title);
+    assert.deepEqual(corrected.category, category);
+    const facets = recordFacets(legacy);
+    assert.deepEqual(facets.types, types);
+    assert.deepEqual(facets.purposes, purposes);
+    assert.deepEqual(facets.attribute, []);
+    assert.deepEqual(facets.confirmation, ['资料归类']);
+    assert.equal(correctedRecordDefaults({ ...legacy, sources: [{ ...legacy.sources[0], payloadHash: '0'.repeat(64) }] }).title, name);
+  }
+  // Racing has its own subcategory, so all 20 racing sounds filter under purpose 其他演出 like the other 其他演出 entries.
+  const racing = added.filter(key => key.startsWith('SE_RACE_'));
+  assert.equal(racing.length, 20);
+  for (const key of racing) assert.deepEqual(metadata.profiles[metadata.resources[key as keyof typeof metadata.resources]].purposes, { 其他演出: ['其他演出'] }, key);
 });
 
 test('legacy CARD_DRAW rows correct on read while SQLite and personal edits stay intact', () => {
